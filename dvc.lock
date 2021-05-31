@@ -1,0 +1,29 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/get_data.py data/boston.csv
+    deps:
+    - path: src/get_data.py
+      md5: 6c689d9c83194bb9197c0a0c792bc316
+      size: 758
+    outs:
+    - path: data/boston.csv
+      md5: 4ddc3b934b0feeb54a1df93b503e318b
+      size: 39678
+  engineering:
+    cmd: python src/feature_engineering.py data/boston.csv params.yaml data/boston_features.csv
+    deps:
+    - path: data/boston.csv
+      md5: 4ddc3b934b0feeb54a1df93b503e318b
+      size: 39678
+    params:
+      params.yaml:
+        engineering.log: true
+        engineering.log_features:
+        - CRIM
+        - DIS
+        - LSTAT
+    outs:
+    - path: data/boston_features.csv
+      md5: 1072860774a925ff93879b0f43fe7816
+      size: 61127

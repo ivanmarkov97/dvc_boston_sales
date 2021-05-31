@@ -1,0 +1,6 @@
+engineering:
+  log: true
+  log_features:
+    - 'CRIM'
+    - 'DIS'
+    - 'LSTAT'

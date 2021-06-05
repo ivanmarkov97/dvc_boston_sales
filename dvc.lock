@@ -1,0 +1,75 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/get_data.py data/boston.csv
+    deps:
+    - path: src/get_data.py
+      md5: 6c689d9c83194bb9197c0a0c792bc316
+      size: 758
+    outs:
+    - path: data/boston.csv
+      md5: 4ddc3b934b0feeb54a1df93b503e318b
+      size: 39678
+  engineering:
+    cmd: python src/feature_engineering.py data/boston.csv params.yaml data/boston_features.csv
+    deps:
+    - path: data/boston.csv
+      md5: 4ddc3b934b0feeb54a1df93b503e318b
+      size: 39678
+    params:
+      params.yaml:
+        engineering.log: true
+        engineering.log_features:
+        - CRIM
+        - DIS
+        - LSTAT
+    outs:
+    - path: data/boston_features.csv
+      md5: 1072860774a925ff93879b0f43fe7816
+      size: 61127
+  split:
+    cmd: python src/split.py data/boston_features.csv params.yaml data/train_boston.csv
+      data/test_boston.csv
+    deps:
+    - path: data/boston_features.csv
+      md5: 1072860774a925ff93879b0f43fe7816
+      size: 61127
+    params:
+      params.yaml:
+        split.random_state: 241
+        split.shuffle: true
+        split.test_size: 0.25
+    outs:
+    - path: data/test_boston.csv
+      md5: 0a20f360aedc457814f016a7282381eb
+      size: 15239
+    - path: data/train_boston.csv
+      md5: fecfb5f8edda744c2e445103a1a490f8
+      size: 45113
+  train:
+    cmd: python src/train.py data/train_boston.csv params.yaml models/clf.pkl
+    deps:
+    - path: data/train_boston.csv
+      md5: fecfb5f8edda744c2e445103a1a490f8
+      size: 45113
+    params:
+      params.yaml:
+        train.n_estimators: 100
+        train.random_state: 241
+    outs:
+    - path: models/clf.pkl
+      md5: c58e97ceb50e03f0d54fc875e64881ef
+      size: 2942915
+  eval:
+    cmd: python src/eval.py data/test_boston.csv models/clf.pkl metrics/scores.json
+    deps:
+    - path: data/test_boston.csv
+      md5: 0a20f360aedc457814f016a7282381eb
+      size: 15239
+    - path: models/clf.pkl
+      md5: c58e97ceb50e03f0d54fc875e64881ef
+      size: 2942915
+    outs:
+    - path: metrics/scores.json
+      md5: 672a7a499a005d564992d5f7428b6479
+      size: 54

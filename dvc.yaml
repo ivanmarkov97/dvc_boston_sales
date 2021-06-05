@@ -1,0 +1,45 @@
+stages:
+  get_data:
+    cmd: python src/get_data.py data/boston.csv
+    deps:
+    - src/get_data.py
+    outs:
+    - data/boston.csv
+  engineering:
+    cmd: python src/feature_engineering.py data/boston.csv params.yaml data/boston_features.csv
+    deps:
+    - data/boston.csv
+    params:
+    - engineering.log
+    - engineering.log_features
+    outs:
+    - data/boston_features.csv
+  split:
+    cmd: python src/split.py data/boston_features.csv params.yaml data/train_boston.csv
+      data/test_boston.csv
+    deps:
+    - data/boston_features.csv
+    params:
+    - split.random_state
+    - split.shuffle
+    - split.test_size
+    outs:
+    - data/test_boston.csv
+    - data/train_boston.csv
+  train:
+    cmd: python src/train.py data/train_boston.csv params.yaml models/clf.pkl
+    deps:
+    - data/train_boston.csv
+    params:
+    - train.n_estimators
+    - train.random_state
+    outs:
+    - models/clf.pkl
+  eval:
+    cmd: python src/eval.py data/test_boston.csv models/clf.pkl metrics/scores.json
+    deps:
+    - data/test_boston.csv
+    - models/clf.pkl
+    metrics:
+    - metrics/scores.json:
+        cache: false

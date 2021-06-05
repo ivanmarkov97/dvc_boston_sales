@@ -54,19 +54,22 @@ stages:
       size: 45113
     params:
       params.yaml:
-        train.n_estimators: 100
+        train.n_estimators: 10
         train.random_state: 241
     outs:
     - path: models/clf.pkl
-      md5: c58e97ceb50e03f0d54fc875e64881ef
-      size: 2942915
+      md5: 007ce16a112f1b432a8d51b1e41e2ed5
+      size: 296170
   eval:
     cmd: python src/eval.py data/test_boston.csv models/clf.pkl metrics/scores.json
     deps:
     - path: data/test_boston.csv
       md5: 0a20f360aedc457814f016a7282381eb
       size: 15239
+    - path: models/clf.pkl
+      md5: 007ce16a112f1b432a8d51b1e41e2ed5
+      size: 296170
     outs:
     - path: metrics/scores.json
-      md5: 672a7a499a005d564992d5f7428b6479
+      md5: 1f292bcdd7dd4dbaa0367ffc7840eafa
       size: 54

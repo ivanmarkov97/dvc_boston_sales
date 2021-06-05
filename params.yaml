@@ -9,5 +9,5 @@ split:
   random_state: 241
   shuffle: True
 train:
-  n_estimators: 10
+  n_estimators: 100
   random_state: 241

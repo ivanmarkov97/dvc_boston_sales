@@ -60,3 +60,13 @@ stages:
     - path: models/clf.pkl
       md5: c58e97ceb50e03f0d54fc875e64881ef
       size: 2942915
+  eval:
+    cmd: python src/eval.py data/test_boston.csv models/clf.pkl metrics/scores.json
+    deps:
+    - path: data/test_boston.csv
+      md5: 0a20f360aedc457814f016a7282381eb
+      size: 15239
+    outs:
+    - path: metrics/scores.json
+      md5: 672a7a499a005d564992d5f7428b6479
+      size: 54

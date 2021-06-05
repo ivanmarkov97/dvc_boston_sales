@@ -35,3 +35,10 @@ stages:
     - train.random_state
     outs:
     - models/clf.pkl
+  eval:
+    cmd: python src/eval.py data/test_boston.csv models/clf.pkl metrics/scores.json
+    deps:
+    - data/test_boston.csv
+    metrics:
+    - metrics/scores.json:
+        cache: false

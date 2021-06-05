@@ -27,3 +27,22 @@ stages:
     - path: data/boston_features.csv
       md5: 1072860774a925ff93879b0f43fe7816
       size: 61127
+  split:
+    cmd: python src/split.py data/boston_features.csv params.yaml data/train_boston.csv
+      data/test_boston.csv
+    deps:
+    - path: data/boston_features.csv
+      md5: 1072860774a925ff93879b0f43fe7816
+      size: 61127
+    params:
+      params.yaml:
+        split.random_state: 241
+        split.shuffle: true
+        split.test_size: 0.25
+    outs:
+    - path: data/test_boston.csv
+      md5: 0a20f360aedc457814f016a7282381eb
+      size: 15239
+    - path: data/train_boston.csv
+      md5: fecfb5f8edda744c2e445103a1a490f8
+      size: 45113

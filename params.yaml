@@ -4,3 +4,7 @@ engineering:
     - 'CRIM'
     - 'DIS'
     - 'LSTAT'
+split:
+  test_size: 0.25
+  random_state: 241
+  shuffle: True

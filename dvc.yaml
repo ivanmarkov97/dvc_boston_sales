@@ -14,3 +14,15 @@ stages:
     - engineering.log_features
     outs:
     - data/boston_features.csv
+  split:
+    cmd: python src/split.py data/boston_features.csv params.yaml data/train_boston.csv
+      data/test_boston.csv
+    deps:
+    - data/boston_features.csv
+    params:
+    - split.random_state
+    - split.shuffle
+    - split.test_size
+    outs:
+    - data/test_boston.csv
+    - data/train_boston.csv

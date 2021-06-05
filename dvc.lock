@@ -46,3 +46,17 @@ stages:
     - path: data/train_boston.csv
       md5: fecfb5f8edda744c2e445103a1a490f8
       size: 45113
+  train:
+    cmd: python src/train.py data/train_boston.csv params.yaml models/clf.pkl
+    deps:
+    - path: data/train_boston.csv
+      md5: fecfb5f8edda744c2e445103a1a490f8
+      size: 45113
+    params:
+      params.yaml:
+        train.n_estimators: 100
+        train.random_state: 241
+    outs:
+    - path: models/clf.pkl
+      md5: c58e97ceb50e03f0d54fc875e64881ef
+      size: 2942915

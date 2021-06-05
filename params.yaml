@@ -8,3 +8,6 @@ split:
   test_size: 0.25
   random_state: 241
   shuffle: True
+train:
+  n_estimators: 100
+  random_state: 241

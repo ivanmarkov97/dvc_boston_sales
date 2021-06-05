@@ -26,3 +26,12 @@ stages:
     outs:
     - data/test_boston.csv
     - data/train_boston.csv
+  train:
+    cmd: python src/train.py data/train_boston.csv params.yaml models/clf.pkl
+    deps:
+    - data/train_boston.csv
+    params:
+    - train.n_estimators
+    - train.random_state
+    outs:
+    - models/clf.pkl
